@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flying Pop-up Windows</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="createFlyingPopup()">Otwórz Pop-up</button>
+
+    <script>
+        function createFlyingPopup() {
+            var newWindow = window.open("", "_blank", "width=200,height=100");
+
+            if (newWindow) {
+                var leftPosition = Math.floor(Math.random() * (screen.width - 200));
+                var topPosition = Math.floor(Math.random() * (screen.height - 100));
+
+                newWindow.moveTo(leftPosition, topPosition);
+                newWindow.document.write('<html><head><title>Flying Popup</title></head><body style="margin:0;background-color:red;color:white;text-align:center;font-family:Arial;"><p>Hello!</p></body></html>');
+
+                var speedX = (Math.random() - 0.5) * 30;  
+                var speedY = (Math.random() - 0.5) * 30;  
+
+                function move() {
+                    leftPosition += speedX;
+                    topPosition += speedY;
+
+                    newWindow.moveTo(leftPosition, topPosition);
+
+                    // Ponownie uruchamiamy funkcję ruchu
+                    requestAnimationFrame(move);
+                }
+
+                // Uruchamiamy funkcję ruchu
+                move();
+            }
+        }
+    </script>
+</body>
+</html>
